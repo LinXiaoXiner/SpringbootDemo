@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lx.jiaocheng427.user.dao.UserDao">
+    <select id="getAll" resultType="org.lx.jiaocheng427.user.entity.UserEntity" parameterType="java.util.Map">
+        SELECT * FROM user
+    </select>
+    <delete id="delById" parameterType="java.lang.Integer">
+        delete from user where id = ${id}
+    </delete>
+    <!-- id等于UserDao层的方法名，参数一定为实体类的地址，赋值的参数一定对应实体类的参数名-->
+    <insert id="save" parameterType="org.lx.jiaocheng427.user.entity.UserEntity">
+        INSERT INTO `jiaochengdemo`.`user`
+        (`id`, `username`, `password`, `createtime`, `staus` )
+        VALUES
+        ( NULL, #{username}, #{password}, #{createtime}, #{staus} );
+    </insert>
+</mapper>

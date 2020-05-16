@@ -12,6 +12,13 @@ public interface UserService {
     List<UserEntity> getAll(Map map);
 
     void delById(Integer id);
+
     //保存用户
     public void save(UserEntity userEntity);
+
+    //根据id查询用户
+    public UserEntity getUserById(Integer id);
+
+    //根据id修改用户
+    public void updateUserById(UserEntity userEntity);
 }

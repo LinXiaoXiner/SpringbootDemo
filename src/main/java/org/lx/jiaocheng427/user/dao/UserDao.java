@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.lx.jiaocheng427.user.entity.UserEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,8 @@ public interface UserDao {
     void delById(Integer id);
 
     public void save(UserEntity userEntity);
+
+    public UserEntity getUserById(Integer id);
+
+    public void updateUserById(UserEntity userEntity);
 }

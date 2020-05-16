@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改</title>
+    <link rel="stylesheet" href="bt/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bt/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="bt/js/jquery.js"></script>
+    <script type="text/javascript" src="bt/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+    <form>
+        <input type = "hidden" id = "id">
+        <div class="form-group">
+            <label for="exampleInput" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="exampleInput" placeholder="UserName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="col-sm-2 control-label">新密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword2" class="col-sm-2 control-label">重复密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox">记住密码
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="sub">修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&|$])");
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null)return unescape(r[2]);return null;
+    }
+
+    $(function(){
+        //alert(GetQueryString("id"));
+        var id = GetQueryString("id")
+        $.post({
+            url:"user/getUserById?id=" + id,
+            success: function(data){
+                //console.log(data);
+                $("#id").val(data.id);
+                $("#exampleInput").val(data.username);
+                $("#exampleInputPassword1").val(data.password);
+                $("#exampleInputPassword2").val(data.password);
+
+            }
+        })
+    });
+    $("#sub").click(function(){
+        //alert(123)
+        //取输入值
+        var id =  $("#id").val();
+        var userName = $("#exampleInput").val();
+        var passWord = $("#exampleInputPassword1").val();
+        var rePassWord = $("#exampleInputPassword2").val();
+
+        //用户名是不是为空
+        if(userName.length == 0){
+            alert("用户名不能为空")
+            return;  //不让程序继续执行
+        }
+        //密码是不是为空
+        if(passWord.length == 0){
+            alert("密码不能为空")
+            return;
+        }
+        //判断密码和重复密码是不是一致
+        if(passWord != rePassWord){
+            alert("两次输入密码不一致")
+            return;
+        }
+
+        //alert(123)
+
+        //封装数据，并提交给后端接口
+        var user = {
+            "id" : id,
+            "username" : userName,
+            "password" : passWord
+        }
+        //将实体类转换为json
+        var userJson = JSON.stringify(user)
+
+        //提交给后端接口h
+        $.post({
+            url:'user/updateUserById',
+            data: userJson,
+            contentType: 'application/json',
+            success: function (data){
+                alert(data)
+            }
+        });
+
+    })
+</script>
+</html>

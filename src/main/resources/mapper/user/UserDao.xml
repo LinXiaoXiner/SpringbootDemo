@@ -15,4 +15,17 @@
         VALUES
         ( NULL, #{username}, #{password}, #{createtime}, #{staus} );
     </insert>
+
+    <!--根据id查询用户数据-->
+    <select id = "getUserById" parameterType="java.lang.Integer" resultType="org.lx.jiaocheng427.user.entity.UserEntity">
+        select * from User where id = ${id}
+    </select>
+
+    <!--根据id修改用户数据-->
+    <update id = "updateUserById" parameterType="org.lx.jiaocheng427.user.entity.UserEntity">
+        UPDATE `jiaochengdemo`.`user`
+        SET `username` = #{username}, `password` = #{password}
+        WHERE `id` = ${id};
+    </update>
+
 </mapper>
